@@ -53,7 +53,6 @@ Ta projekt je razdeljen na frontend in backend. Za namestitev in zagon obeh delo
    ```sh
    cd frontend
 
-
 2. Namestite potrebne odvisnosti:
     ```sh
     npm install
@@ -83,7 +82,7 @@ To bo zagnalo vaš Node.js strežnik na naslovu http://localhost:5000.
 ## Avtorji ✍️
 
 - [Nik Tišler](https://github.com/FallenBanana200)
-- [Izidor Robnik]()
+- [Izidor Robnik](https://github.com/Frucek)
 
 ## Povratne informacije 📬
 
