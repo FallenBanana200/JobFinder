@@ -5,6 +5,7 @@
 - [O projektu](#o-projektu)
 - [Funkcionalnosti](#funkcionalnosti)
 - [Dodatne funkcionalnosti (v načrtu)](#dodatne-funkcionalnosti-v-načrtu)
+- [Tehnološki sklad](#tehnoloski-sklad)
 - [Namestitev](#namestitev)
   - [Frontend](#frontend)
   - [Backend](#backend)
@@ -42,6 +43,15 @@ JobFinder je spletna aplikacija, ki uporabnikom (delodajalcem in delojemalcem) p
 - ⭐ Ocenjevanje uporabnikov (graf na profilu)
 - 🔗 Povezovanje z GitHub ali LinkedIn profilom
 - 🗺️ Zemljevid, kjer se prikažejo vsi profili, s katerimi se uporabnik ujema
+
+## Tehnološki sklad
+
+-React
+-Springboot
+-Firestore
+-Render
+-Firebase hosting
+-Docker
 
 ## Namestitev ⚙️
 
