@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://localhost:8080/api'; // Your Spring Boot backend URL
+const API_BASE_URL = 'http://localhost:8080/api';
 
 export async function getJobData() {
     const response = await fetch(`${API_BASE_URL}/jobs`);
