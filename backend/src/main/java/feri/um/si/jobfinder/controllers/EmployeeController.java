@@ -3,6 +3,8 @@ package feri.um.si.jobfinder.controllers;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import feri.um.si.jobfinder.models.employee.Employee;
+import feri.um.si.jobfinder.models.employer.Employer;
+import feri.um.si.jobfinder.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,10 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
+
+    @Autowired
+    private PersonService service;
+
 
     @Autowired
     private Firestore firestore;
@@ -38,7 +44,16 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/")
+    @PostMapping("/{id}/likes")
+    public void likeEmployer(@PathVariable String id, @RequestBody Employer employer) {
+        try {
+            service.updateLikes(id, employer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping()
     public ResponseEntity<Map<String, Employee>> getAllEmployees() {
         try {
             CollectionReference collection = firestore.collection("employee");
@@ -67,6 +82,10 @@ public class EmployeeController {
             employeeData.put("bio", employee.getBio());
             employeeData.put("competences", employee.getCompetences());
             employeeData.put("picture", employee.getPicture());
+            employeeData.put("email", employee.getEmail());
+            employeeData.put("likedBy", null);
+            employeeData.put("myLikes", null);
+            employeeData.put("matched", null);
 
             collection.add(employeeData);
             return new ResponseEntity<>("Employee created successfully!", HttpStatus.CREATED);
@@ -87,6 +106,12 @@ public class EmployeeController {
             updates.put("bio", employee.getBio());
             updates.put("competences", employee.getCompetences());
             updates.put("picture", employee.getPicture());
+            updates.put("email", employee.getEmail());
+
+            //METHODS FOR UPGRADED VERSION - BEHIND PAYWALL
+            //updates.put("likedBy", employee.getLikedBy());
+            //updates.put("myLikes", employee.getMyLikes());
+            //updates.put("matches", employee.getMatches());
 
             docRef.set(updates, SetOptions.merge());
             return new ResponseEntity<>("Employee updated successfully!", HttpStatus.OK);

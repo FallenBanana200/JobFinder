@@ -1,8 +1,12 @@
 package feri.um.si.jobfinder.controllers;
 
 import com.google.cloud.firestore.*;
+import feri.um.si.jobfinder.models.employee.Employee;
 import feri.um.si.jobfinder.models.employer.Employer;
+import feri.um.si.jobfinder.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,14 +18,18 @@ import java.util.concurrent.ExecutionException;
 public class EmployerController {
 
     @Autowired
+    private PersonService service;
+
+    @Autowired
     private Firestore firestore;
 
     @GetMapping("/{id}")
-    public Employer getEmployerById(@PathVariable String id) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Employer> getEmployerById(@PathVariable String id) throws ExecutionException, InterruptedException {
         DocumentReference docRef = firestore.collection("employer").document(id);
         DocumentSnapshot document = docRef.get().get();
         if (document.exists()) {
-            return document.toObject(Employer.class);
+            Employer employer = document.toObject(Employer.class);
+            return new ResponseEntity<>(employer, HttpStatus.OK);
         } else {
             throw new RuntimeException("No such document!");
         }
@@ -51,6 +59,7 @@ public class EmployerController {
             employerData.put("bio", employer.getBio());
             employerData.put("expectations", employer.getExpectations());
             employerData.put("salary", employer.getSalary());
+            employerData.put("matched", employer.getMatched());
 
             collection.add(employerData);
             return "Employer created successfully!";
@@ -59,6 +68,18 @@ public class EmployerController {
             return "Failed to create employer: " + e.getMessage();
         }
     }
+
+    @PostMapping("/{id}/likes")
+    public ResponseEntity<String> likeEmployee(@PathVariable String id, @RequestBody Employee employee) {
+        try {
+            service.updateLikes(id, employee);
+            return new ResponseEntity<>("Likes updated successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error updating likes", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PutMapping("/update/{id}")
     public String updateEmployer(@PathVariable String id, @RequestBody Employer employer) {
@@ -72,6 +93,8 @@ public class EmployerController {
             updates.put("bio", employer.getBio());
             updates.put("expectations", employer.getExpectations());
             updates.put("salary", employer.getSalary());
+
+            //updates.put("matched", employer.getMatched());
 
             docRef.set(updates, SetOptions.merge());
             return "Employer updated successfully!";
