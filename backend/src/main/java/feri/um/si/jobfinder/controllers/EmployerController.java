@@ -53,7 +53,7 @@ public class EmployerController {
             CollectionReference collection = firestore.collection("employer");
             Map<String, Object> employerData = new HashMap<>();
             employerData.put("companyName", employer.getCompanyName());
-            employerData.put("companyEmail", employer.getCompanyEmail());
+            employerData.put("companyEmail", employer.getCompanyMail());
             employerData.put("contactNumber", employer.getContactNumber());
             employerData.put("location", employer.getLocation());
             employerData.put("bio", employer.getBio());
@@ -87,7 +87,7 @@ public class EmployerController {
             DocumentReference docRef = firestore.collection("employer").document(id);
             Map<String, Object> updates = new HashMap<>();
             updates.put("companyName", employer.getCompanyName());
-            updates.put("companyEmail", employer.getCompanyEmail());
+            updates.put("companyEmail", employer.getCompanyMail());
             updates.put("contactNumber", employer.getContactNumber());
             updates.put("location", employer.getLocation());
             updates.put("bio", employer.getBio());

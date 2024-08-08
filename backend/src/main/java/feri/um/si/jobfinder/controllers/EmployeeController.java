@@ -45,11 +45,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/{id}/likes")
-    public void likeEmployer(@PathVariable String id, @RequestBody Employer employer) {
+    public ResponseEntity<String> likeEmployer(@PathVariable String id, @RequestBody Employer employer) {
         try {
             service.updateLikes(id, employer);
+            return new ResponseEntity<>("Likes updated successfully", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>("Error updating likes", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

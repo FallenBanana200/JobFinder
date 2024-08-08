@@ -1,10 +1,7 @@
 package feri.um.si.jobfinder.models.employer;
 
 import feri.um.si.jobfinder.models.employee.Employee;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 
@@ -12,10 +9,11 @@ import java.util.ArrayList;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Employer {
 
     private String companyName;
-    private String companyEmail;
+    private String companyMail;
     private int contactNumber;
     private String location;
     private String bio;
