@@ -16,21 +16,20 @@ public class PersonService {
     @Autowired
     Firestore db;
 
-    private String getEmployerEmailById(String employerId) throws ExecutionException, InterruptedException {
-        DocumentReference employerDocRef = db.collection("employer").document(employerId);
-        ApiFuture<DocumentSnapshot> future = employerDocRef.get();
+    private String getEmailById(String collectionName, String documentId, String emailField) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = db.collection(collectionName).document(documentId);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
 
         if (document.exists()) {
-            String email = document.getString("companyMail");
-            System.out.println("Employer email: " + email);
+            String email = document.getString(emailField);
+            System.out.println("Email: " + email);
             return email;
         } else {
-            System.out.println("No such document!");
+            System.out.println("No such document in collection " + collectionName + " with ID " + documentId);
             return null;
         }
     }
-
 
     public void updateLikes(String id, Object obj) {
         try {
@@ -51,13 +50,25 @@ public class PersonService {
 
                     List<String> employeeLikedBy = (List<String>) snapshot.get("likedBy");
                     if (employeeLikedBy != null && employeeLikedBy.contains(employer.getCompanyMail())) {
+                        CollectionReference employerCollection = db.collection("employer");
+                        Query query = employerCollection.whereEqualTo("companyMail", employer.getCompanyMail());
+                        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+                        List<QueryDocumentSnapshot> employerDocuments = querySnapshot.get().getDocuments();
+                        if (employerDocuments.isEmpty()) {
+                            System.out.println("Employer document with email " + employer.getCompanyMail() + " does not exist.");
+                            return null;
+                        }
+
+                        DocumentReference employerDocRef = employerDocuments.get(0).getReference();
+
                         transaction.update(employeeDocRef, "matches", FieldValue.arrayUnion(employer.getCompanyMail()));
-                        DocumentReference employerDocRef = db.collection("employer").document(employer.getCompanyMail());
-                        transaction.update(employerDocRef, "matches", FieldValue.arrayUnion(id));
+                        transaction.update(employerDocRef, "matches", FieldValue.arrayUnion(getEmailById("employee", id, "email")));
                     }
 
                     return null;
                 }).get();
+
 
                 System.out.println("Updated likes for employee and checked for match.");
 
@@ -94,11 +105,12 @@ public class PersonService {
                 System.out.println("Employee document found: " + employeeSnapshot.getId());
 
                 db.runTransaction((Transaction.Function<Void>) transaction -> {
-                    transaction.update(employeeDocRef, "likedBy", FieldValue.arrayUnion(getEmployerEmailById(id)));
+                    transaction.update(employeeDocRef, "likedBy", FieldValue.arrayUnion(getEmailById("employer", id, "companyMail")));
 
                     List<String> employeeMyLikes = (List<String>) employeeSnapshot.get("myLikes");
-                    if (employeeMyLikes != null && employeeMyLikes.contains(id)) {
-                        transaction.update(employeeDocRef, "matches", FieldValue.arrayUnion(id));
+                    System.out.println(employeeMyLikes);
+                    if (employeeMyLikes != null && employeeMyLikes.contains(getEmailById("employer", id, "companyMail"))) {
+                        transaction.update(employeeDocRef, "matches", FieldValue.arrayUnion(getEmailById("employer", id, "companyMail")));
                         transaction.update(employerDocRef, "matches", FieldValue.arrayUnion(employee.getEmail()));
                     }
 
