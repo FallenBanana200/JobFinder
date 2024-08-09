@@ -1,5 +1,5 @@
 import React from "react";
-import "./Chat.css"
+import "../css/Chat.css"
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 

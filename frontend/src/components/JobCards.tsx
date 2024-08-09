@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TinderCard from "react-tinder-card";
-import "./JobCards.css"
+import "../css/JobCards.css"
 
 
 function JobCards() {

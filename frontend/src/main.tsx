@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Header from './Header.tsx';
-import Chats from './Chats.tsx';
-import ChatScreen from './ChatScreen.tsx';
+import Header from './components/Header.tsx';
+import Chats from './components/Chats.tsx';
+import ChatScreen from './components/ChatScreen.tsx';
 
 const router = createBrowserRouter([
   {

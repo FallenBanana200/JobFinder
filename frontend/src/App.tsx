@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
-import JobCards from './JobCards';
-import SwipeButtons from './SwipeButtons';
+import Header from './components/Header';
+import JobCards from './components/JobCards';
+import SwipeButtons from './components/SwipeButtons';
 
 
 function App() {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ChatScreen.css"
+import "../css/ChatScreen.css"
 import { Avatar } from "@mui/material";
 
 function ChatScreen() {
