@@ -31,6 +31,21 @@ public class PersonService {
         }
     }
 
+    private DocumentReference getDocumentReference(String collection, String field, String value) throws ExecutionException, InterruptedException {
+        CollectionReference collectionRef = db.collection(collection);
+        Query query = collectionRef.whereEqualTo(field, value);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+        if (documents.isEmpty()) {
+            System.out.println("No document found in collection " + collection + " with " + field + " = " + value);
+            return null;
+        }
+
+        return documents.get(0).getReference();
+    }
+
+
     public void updateLikes(String id, Object obj) {
         try {
             if (obj instanceof Employer employer) {
@@ -50,20 +65,12 @@ public class PersonService {
 
                     List<String> employeeLikedBy = (List<String>) snapshot.get("likedBy");
                     if (employeeLikedBy != null && employeeLikedBy.contains(employer.getCompanyMail())) {
-                        CollectionReference employerCollection = db.collection("employer");
-                        Query query = employerCollection.whereEqualTo("companyMail", employer.getCompanyMail());
-                        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+                        DocumentReference employerDocRef = getDocumentReference("employer", "companyMail", employer.getCompanyMail());
 
-                        List<QueryDocumentSnapshot> employerDocuments = querySnapshot.get().getDocuments();
-                        if (employerDocuments.isEmpty()) {
-                            System.out.println("Employer document with email " + employer.getCompanyMail() + " does not exist.");
-                            return null;
+                        if (employerDocRef != null) {
+                            transaction.update(employeeDocRef, "matches", FieldValue.arrayUnion(employer.getCompanyMail()));
+                            transaction.update(employerDocRef, "matches", FieldValue.arrayUnion(getEmailById("employee", id, "email")));
                         }
-
-                        DocumentReference employerDocRef = employerDocuments.get(0).getReference();
-
-                        transaction.update(employeeDocRef, "matches", FieldValue.arrayUnion(employer.getCompanyMail()));
-                        transaction.update(employerDocRef, "matches", FieldValue.arrayUnion(getEmailById("employee", id, "email")));
                     }
 
                     return null;
@@ -89,17 +96,8 @@ public class PersonService {
                     return;
                 }
 
-                CollectionReference employeeCollection = db.collection("employee");
-                Query query = employeeCollection.whereEqualTo("email", employee.getEmail());
-                ApiFuture<QuerySnapshot> querySnapshot = query.get();
-
-                List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
-                if (documents.isEmpty()) {
-                    System.out.println("Employee document with email " + employee.getEmail() + " does not exist.");
-                    return;
-                }
-
-                DocumentReference employeeDocRef = documents.get(0).getReference();
+                DocumentReference employeeDocRef = getDocumentReference("employee", "email", employee.getEmail());
+                assert employeeDocRef != null;
                 DocumentSnapshot employeeSnapshot = employeeDocRef.get().get();
 
                 System.out.println("Employee document found: " + employeeSnapshot.getId());
