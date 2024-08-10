@@ -18,6 +18,7 @@ public class Employer {
     private String location;
     private String bio;
     private String expectations;
+    private String picture;
     private int salary;
-    private ArrayList<Employee> matched;
+    private ArrayList<String> matches;
 }

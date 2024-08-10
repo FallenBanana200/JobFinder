@@ -35,7 +35,7 @@ public class EmployerController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public Map<String, Employer> getAllEmployers() throws ExecutionException, InterruptedException {
         CollectionReference collection = firestore.collection("employer");
         Iterable<QueryDocumentSnapshot> documents = collection.get().get().getDocuments();
@@ -59,7 +59,8 @@ public class EmployerController {
             employerData.put("bio", employer.getBio());
             employerData.put("expectations", employer.getExpectations());
             employerData.put("salary", employer.getSalary());
-            employerData.put("matched", employer.getMatched());
+            employerData.put("matched", employer.getMatches());
+            employerData.put("picture", employer.getPicture());
 
             collection.add(employerData);
             return "Employer created successfully!";
@@ -93,6 +94,7 @@ public class EmployerController {
             updates.put("bio", employer.getBio());
             updates.put("expectations", employer.getExpectations());
             updates.put("salary", employer.getSalary());
+            updates.put("picture", employer.getPicture());
 
             //updates.put("matched", employer.getMatched());
 

@@ -22,7 +22,7 @@ public class Employee {
     private String competences;
     private String picture;
     private String email;
-    private ArrayList<Employer> likedBy;
-    private ArrayList<Employer> myLikes;
-    private ArrayList<Employer> matches;
+    private ArrayList<String> likedBy;
+    private ArrayList<String> myLikes;
+    private ArrayList<String> matches;
 }
