@@ -54,12 +54,12 @@ JobFinder je spletna aplikacija, ki uporabnikom (delodajalcem in delojemalcem) p
 
 ## Tehnološki sklad
 
-- ![React]([https://path-to-your-react-logo.png](https://w7.pngwing.com/pngs/79/518/png-transparent-js-react-js-logo-react-react-native-logos-icon-thumbnail.png)) React
-- ![Spring Boot]([https://path-to-your-springboot-logo.png](https://w7.pngwing.com/pngs/713/936/png-transparent-spring-framework-representational-state-transfer-java-api-for-restful-web-services-microservices-others-text-trademark-logo-thumbnail.png)) Spring Boot
-- ![Firestore]([https://path-to-your-firestore-logo.png](https://e7.pngegg.com/pngimages/620/609/png-clipart-firebase-cloud-messaging-google-cloud-messaging-api-as-a-service-angle-rectangle.png)) Firestore
-- ![Render]([https://path-to-your-render-logo.png](https://cdn.freelogovectors.net/wp-content/uploads/2022/10/render-logo-freelogovectors.net_.png)) Render
-- ![Vercel]([https://path-to-your-vercel-logo.png](https://w7.pngwing.com/pngs/436/888/png-transparent-vercel-hd-logo-thumbnail.png)) Vercel
-- ![Docker]([https://path-to-your-docker-logo.png](https://w7.pngwing.com/pngs/219/411/png-transparent-docker-logo-kubernetes-microservices-cloud-computing-dockers-logo-text-logo-cloud-computing-thumbnail.png)) Docker
+- ![React](./logo-assets/react.png) React
+- ![Spring Boot](./assets/springboot.png) Spring Boot
+- ![Firestore](./assets/firestore.jpg) Firestore
+- ![Render](./assets/render.png) Render
+- ![Vercel](./assets/vercel.png) Vercel
+- ![Docker](./assets/docker.png) Docker
 
 ## Namestitev ⚙️
 
