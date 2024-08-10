@@ -52,20 +52,14 @@ JobFinder je spletna aplikacija, ki uporabnikom (delodajalcem in delojemalcem) p
 - 📄 Odpiranje podrobnosti profila delojemalca, ki bi prikazalo tudi CV
 - 📅 Povezava z Google Meet koledarjem, na katerega bi se lahko dodali razgovori za službo v chat-u dveh ujemanih posameznikov
 
-## Tehnološki sklad
+## Tehnološki sklad 🛠️
 
-- React![react](https://github.com/user-attachments/assets/017330fd-b151-4b20-b638-63f0c9cda161)
-
-- Spring Boot![springboot](https://github.com/user-attachments/assets/090e167a-25a1-4f53-8b8c-0462bf17fb7a)
-
-- Firestore![firestore](https://github.com/user-attachments/assets/cd3cd560-0885-47ea-a54f-f6610676ce82)
-
-- Render![render](https://github.com/user-attachments/assets/513f087b-d4cc-403e-9fa8-d28811f9798f)
-
-- Vercel![vercel](https://github.com/user-attachments/assets/3287a66d-6b61-466b-b6e4-0f5187d2c3c2)
-
-- Docker![docker](https://github.com/user-attachments/assets/8dfdf29e-d471-4b33-8092-794a8ff32007)
-
+- React <br/><img src="https://github.com/user-attachments/assets/017330fd-b151-4b20-b638-63f0c9cda161" width="100" />
+- SpringBoot <br> <img src="https://github.com/user-attachments/assets/090e167a-25a1-4f53-8b8c-0462bf17fb7a" width="100" />
+- Firestore <br> <img src="https://github.com/user-attachments/assets/cd3cd560-0885-47ea-a54f-f6610676ce82" width="100" />
+- Render <br> <img src="https://github.com/user-attachments/assets/513f087b-d4cc-403e-9fa8-d28811f9798f" width="100" />
+- Vercel <br> <img src="https://github.com/user-attachments/assets/3287a66d-6b61-466b-b6e4-0f5187d2c3c2" width="100" />
+- Docker <br> <img src="https://github.com/user-attachments/assets/8dfdf29e-d471-4b33-8092-794a8ff32007" width="100" />
 
 ## Namestitev ⚙️
 
