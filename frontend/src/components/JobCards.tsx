@@ -20,7 +20,7 @@ function JobCards() {
 
     const fetchEmployees = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/employee");
+        const response = await fetch("https://jobfinder-latest.onrender.com/api/employee");
 
         if (!response.ok) {
           throw new Error(`Error fetching employees: ${response.statusText}`);
@@ -37,7 +37,7 @@ function JobCards() {
 
     const fetchEmployers = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/employer");
+        const response = await fetch("https://jobfinder-latest.onrender.com/api/employer");
 
         if (!response.ok) {
           throw new Error(`Error fetching employers: ${response.statusText}`);
