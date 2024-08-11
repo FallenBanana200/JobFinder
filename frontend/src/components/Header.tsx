@@ -21,7 +21,7 @@ function Header({ backButton }) {
                     </IconButton>
                 )}
 
-                <Link to="/">
+                <Link to="/app">
                     <img
                         className="header__logo"
                         src="https://s3u.tmimgcdn.com/u37752224/157d948818e506df9d322b29114d6dca.gif"

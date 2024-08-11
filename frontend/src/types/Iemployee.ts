@@ -6,4 +6,5 @@ export interface Iemployee {
     lastName : string;
     name : string;
     picture : string;
+    password : string;
 }

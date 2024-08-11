@@ -7,4 +7,5 @@ export interface Iemployer {
     location: string;
     salary: number;
     picture: string;
+    password: string;
 }
