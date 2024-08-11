@@ -5,7 +5,7 @@ import "../../css/LoginRegister.css";
 type UserType = 'employee' | 'employer' | null;
 type FormMode = 'login' | 'signup';
 
-const LoginSignUpForm: React.FC = () => {
+function LoginSignUpForm(){
     const [formMode, setFormMode] = useState<FormMode>('login');
     const [userType, setUserType] = useState<UserType>('employee');
 

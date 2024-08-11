@@ -6,6 +6,8 @@ import LoginRegister from './components/Login/LoginRegister.tsx';
 import Header from './components/Header.tsx';
 import Chats from './components/Chats.tsx';
 import ChatScreen from './components/ChatScreen.tsx';
+import ProfilePage from './components/ProfilePage.tsx';
+import ProfileMenu from './components/ProfileMenu.tsx';
 import './index.css';
 
 const useAuth = () => {
@@ -45,6 +47,24 @@ function MainRouter() {
         <>
           <Header backButton="/chat" />
           <ChatScreen />
+        </>
+      ),
+    },
+    {
+      path: '/profile',
+      element: (
+        <>
+          <Header backButton="/app" />
+          <ProfileMenu />
+        </>
+      ),
+    },
+    {
+      path: '/profile/edit',
+      element: (
+        <>
+          <Header backButton="/profile" />
+          <ProfilePage />
         </>
       ),
     },
