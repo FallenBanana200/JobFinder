@@ -163,9 +163,6 @@ function LoginSignUpForm(){
         }
     };
 
-
-
-
     return (
         <div className="login-register-page">
             <div className="auth-wrapper">

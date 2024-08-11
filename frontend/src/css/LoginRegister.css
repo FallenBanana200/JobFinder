@@ -61,10 +61,11 @@
 .login-register-page .form-group.half-width {
     flex: 1;
     min-width: 0;
+    max-width: 90%;
 }
 
 .login-register-page .form-group.full-width {
-    width: 100%;
+    width: 95%;
 }
 
 .login-register-page .form-row {
