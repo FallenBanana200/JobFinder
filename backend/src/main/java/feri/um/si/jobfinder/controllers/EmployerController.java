@@ -61,6 +61,7 @@ public class EmployerController {
             employerData.put("salary", employer.getSalary());
             employerData.put("matched", employer.getMatches());
             employerData.put("picture", employer.getPicture());
+            employerData.put("password", employer.getPassword());
 
             collection.add(employerData);
             return "Employer created successfully!";
@@ -95,6 +96,7 @@ public class EmployerController {
             updates.put("expectations", employer.getExpectations());
             updates.put("salary", employer.getSalary());
             updates.put("picture", employer.getPicture());
+            updates.put("password", employer.getPassword());
 
             //updates.put("matched", employer.getMatched());
 

@@ -25,4 +25,5 @@ public class Employee {
     private ArrayList<String> likedBy;
     private ArrayList<String> myLikes;
     private ArrayList<String> matches;
+    private String password;
 }

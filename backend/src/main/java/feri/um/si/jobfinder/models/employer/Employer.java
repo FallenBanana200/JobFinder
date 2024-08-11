@@ -21,4 +21,5 @@ public class Employer {
     private String picture;
     private int salary;
     private ArrayList<String> matches;
+    private String password;
 }

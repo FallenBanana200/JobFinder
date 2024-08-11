@@ -88,6 +88,7 @@ public class EmployeeController {
             employeeData.put("likedBy", null);
             employeeData.put("myLikes", null);
             employeeData.put("matched", null);
+            employeeData.put("password", employee.getPassword());
 
             collection.add(employeeData);
             return new ResponseEntity<>("Employee created successfully!", HttpStatus.CREATED);
@@ -109,6 +110,7 @@ public class EmployeeController {
             updates.put("competences", employee.getCompetences());
             updates.put("picture", employee.getPicture());
             updates.put("email", employee.getEmail());
+            updates.put("password", employee.getPassword());
 
             //METHODS FOR UPGRADED VERSION - BEHIND PAYWALL
             //updates.put("likedBy", employee.getLikedBy());
