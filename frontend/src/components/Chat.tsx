@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/Chat.css";
-import { Avatar } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
+import Rating from '@mui/material/Rating';
 import { Link } from "react-router-dom";
 
 interface ChatProps {
@@ -13,19 +14,41 @@ interface ChatProps {
 }
 
 function Chat({ chatId, name, companyName, message, timestamp, profilePic }: ChatProps) {
+    // Initialize rating value
+    const [value, setValue] = useState<number | null>(0);
     const displayName = companyName || name || "Unknown";
 
     return (
-        <Link to={`/chat/${chatId}`}>
-            <div className="chat">
-                <Avatar className="chat__image" src={profilePic} />
-                <div className="chat__details">
-                    <h2>{displayName}</h2>
-                    <p>{message}</p>
+        <div className="chat">
+            <Link to={`/chat/${chatId}`}>
+                <div className="chat">
+                    <Avatar className="chat__image" src={profilePic} />
+                    <div className="chat__details">
+                        <h2>{displayName}</h2>
+                        <p>{message}</p>
+                    </div>
+
                 </div>
-                <p className="chat__timestamp">{timestamp}</p>
-            </div>
-        </Link>
+            </Link>
+            <div className="chat_main">
+                <div className="rating"><Box
+                    sx={{
+                        '& > legend': { mt: 2 },
+                    }}
+                >
+                    <Rating
+                        name="rating"
+                        sx={{ marginRight: 3 }}
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                        precision={0.5}
+                    />
+                </Box>
+                </div>
+                <p className="chat__timestamp">{timestamp}</p></div>
+        </div>
     );
 }
 

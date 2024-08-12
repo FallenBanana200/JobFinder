@@ -10,6 +10,8 @@ import ProfilePage from './components/ProfilePage.tsx';
 import ProfileMenu from './components/ProfileMenu.tsx';
 import './index.css';
 import { AuthProvider } from './AuthContext.tsx';
+import Footer from './components/Footer.tsx';
+import WorkTypes from './components/WorkTypes.tsx';
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -31,7 +33,7 @@ function MainRouter() {
     },
     {
       path: '/app',
-      element: <App />,
+      element: <><App /><Footer/></>,
     },
     {
       path: '/chat',
@@ -66,6 +68,15 @@ function MainRouter() {
         <>
           <Header backButton="/profile" />
           <ProfilePage />
+        </>
+      ),
+    },
+    {
+      path: '/types',
+      element: (
+        <>
+          <Header backButton="/app" />
+          <WorkTypes/>
         </>
       ),
     },

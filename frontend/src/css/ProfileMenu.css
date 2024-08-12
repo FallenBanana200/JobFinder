@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     min-height: 80vh;
     padding: 20px;
     background-color: #f9f9f9;
@@ -40,11 +40,11 @@
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 
-.profile-menu button:last-child {
+#logout {
     background-color: #dc3545;
 }
 
-.profile-menu button:last-child:hover {
+#logout:hover {
     background-color: #c82333;
 }
 
@@ -61,4 +61,39 @@
     .profile-menu button {
         font-size: 0.9rem;
     }
+}
+
+#linked {
+    background-color: rgb(25, 136, 180);
+}
+
+#linked:hover {
+    background-color: rgb(23, 119, 156);
+}
+
+#hub {
+    background-color: black;
+}
+
+#hub:hover {
+    background-color: rgb(204, 133, 1);
+}
+
+.linka {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: auto;
+}
+
+.parent-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#picture {
+    width: 90%;
+    border-radius: 2vh;
+    margin-bottom: 30px;
 }

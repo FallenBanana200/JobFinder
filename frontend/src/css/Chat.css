@@ -27,3 +27,8 @@ a {
 .chat__image {
     margin-right: 20px;
 }
+
+.chat_main {
+    display: flex;
+    justify-items: end;
+}

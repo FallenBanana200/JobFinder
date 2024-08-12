@@ -292,7 +292,6 @@ function ProfilePage() {
                     )}
                 </div>
             </form>
-
         </div>
     );
 }

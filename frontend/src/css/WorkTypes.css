@@ -1,0 +1,41 @@
+.work_types_container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.work_types {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.work_card {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    height: 300px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px;
+    box-sizing: border-box;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.card-text {
+    margin-top: auto;
+}
