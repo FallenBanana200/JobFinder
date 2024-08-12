@@ -4,6 +4,7 @@ import "../css/JobCards.css";
 import { Iemployee } from "../types/Iemployee";
 import { Iemployer } from "../types/Iemployer";
 import SwipeButtons from "./SwipeButtons";
+import { createChat } from "../api"; // Adjust import path as necessary
 
 function JobCards() {
   const [userType, setUserType] = useState<string | null>(null);
@@ -93,6 +94,8 @@ function JobCards() {
       }
 
       console.log('Successfully liked the card!');
+      await createChat(userId, identifier);
+
     } catch (error) {
       console.error('Failed to like the card:', error);
     }

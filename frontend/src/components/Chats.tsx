@@ -1,37 +1,60 @@
-import React from "react";
-import Chat from "./Chat"
+import React, { useState, useEffect } from "react";
+import Chat from "./Chat";
+import { fetchChats } from "../api";
+import { useAuth } from "../AuthContext";
 
 function Chats() {
+    const [chats, setChats] = useState<any[]>([]);
+    const { currentUser } = useAuth();
+
+    useEffect(() => {
+        // Define an async function to fetch chats
+        const fetchUserChats = async () => {
+            if (!currentUser) {
+                console.error("No current user found.");
+                return;
+            }
+
+            const userEmailOrCompanyMail = currentUser.email || "";
+            const userType = currentUser.type || "";
+
+            if (!userEmailOrCompanyMail || !userType) {
+                console.error("User email or type not available.");
+                return;
+            }
+
+            try {
+                console.log("Fetching chats for:", userEmailOrCompanyMail, userType);
+                const fetchedChats = await fetchChats(userEmailOrCompanyMail, userType);
+                console.log("Fetched chats:", fetchedChats);
+                setChats(fetchedChats);
+            } catch (error) {
+                console.error("Error fetching chats:", error);
+            }
+        };
+
+        // Call the function to fetch chats
+        fetchUserChats();
+    }, [currentUser]); // Fetch chats every time the component mounts or `currentUser` changes
+
     return (
-        <>
-            <div className="chats">
-                <Chat
-                    name="Mark"
-                    message="Whatsup"
-                    timestamp="1 week ago"
-                    profilePic="https://cdn.nba.com/headshots/nba/latest/1040x760/1631109.png"
-                />
-                <Chat
-                    name="Broski"
-                    message="new message"
-                    timestamp="45 secs ago"
-                    profilePic="https://i.pinimg.com/736x/31/cd/33/31cd33ba70bfb9716bf21d9829686fd8.jpg"
-                />
-                <Chat
-                    name="Deward"
-                    message="Hey you new here?"
-                    timestamp="1h ago"
-                    profilePic="https://imageio.forbes.com/specials-images/imageserve/5ed560d07fe4060006bbce1e/0x0.jpg?format=jpg&crop=878,879,x422,y0,safe&height=416&width=416&fit=bounds"
-                />
-                <Chat
-                    name="Martin"
-                    message="greetings"
-                    timestamp="2h ago"
-                    profilePic="https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"
-                />
-            </div>
-        </>
-    )
+        <div className="chats">
+            {chats.length > 0 ? (
+                chats.map((chat) => (
+                    <Chat
+                        key={chat.id}
+                        chatId={chat.id}
+                        name={chat.name}
+                        message={chat.lastMessage}
+                        timestamp={chat.timestamp}
+                        profilePic={chat.profilePic}
+                    />
+                ))
+            ) : (
+                <p>No chats available</p>
+            )}
+        </div>
+    );
 }
 
 export default Chats;

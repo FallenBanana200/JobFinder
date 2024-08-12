@@ -9,6 +9,7 @@ import ChatScreen from './components/ChatScreen.tsx';
 import ProfilePage from './components/ProfilePage.tsx';
 import ProfileMenu from './components/ProfileMenu.tsx';
 import './index.css';
+import { AuthProvider } from './AuthContext.tsx';
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -75,6 +76,8 @@ function MainRouter() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MainRouter />
+    <AuthProvider>
+      <MainRouter />
+    </AuthProvider>
   </React.StrictMode>
 );
