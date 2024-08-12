@@ -1,10 +1,17 @@
-// Chat.tsx
 import React from "react";
 import "../css/Chat.css";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function Chat({ chatId, name, message, timestamp, profilePic }: any) {
+interface ChatProps {
+    chatId: string;
+    name: string;
+    message: string;
+    timestamp: string;
+    profilePic: string;
+}
+
+function Chat({ chatId, name, message, timestamp, profilePic }: ChatProps) {
     return (
         <Link to={`/chat/${chatId}`}>
             <div className="chat">

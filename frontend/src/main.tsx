@@ -43,7 +43,7 @@ function MainRouter() {
       ),
     },
     {
-      path: '/chat/:person',
+      path: '/chat/:chatId',
       element: (
         <>
           <Header backButton="/chat" />

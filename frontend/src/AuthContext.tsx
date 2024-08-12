@@ -12,14 +12,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     const login = async (email: string, password: string) => {
-        // Tukaj dodaj svojo logiko prijave
-        // Če je prijava uspešna:
         setIsAuthenticated(true);
     };
 
     const register = async (userType: 'employee' | 'employer', data: any) => {
-        // Tukaj dodaj svojo logiko registracije
-        // Po uspešni registraciji:
         setIsAuthenticated(true);
     };
 

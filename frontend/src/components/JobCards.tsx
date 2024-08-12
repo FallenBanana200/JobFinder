@@ -4,7 +4,7 @@ import "../css/JobCards.css";
 import { Iemployee } from "../types/Iemployee";
 import { Iemployer } from "../types/Iemployer";
 import SwipeButtons from "./SwipeButtons";
-import { createChat } from "../api"; // Adjust import path as necessary
+import { createChat } from "../api";
 
 function JobCards() {
   const [userType, setUserType] = useState<string | null>(null);

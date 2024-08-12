@@ -9,24 +9,20 @@ import {
     updateDoc,
     serverTimestamp,
     orderBy,
-    DocumentData,
-    QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
-// Function to fetch matches for the current user
 export const fetchMatches = async (userId: string, userType: string) => {
     const matches: any[] = [];
     const oppositeType = userType === "employee" ? "employers" : "employees";
 
     try {
-        // Fetch chats where the user is one of the participants
         const q = query(collection(db, "chats"), where("userIds", "array-contains", userId));
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            const matchedUserId = data.userIds.find((id: string) => id !== userId); // Find the other user in the chat
+            const matchedUserId = data.userIds.find((id: string) => id !== userId);
             matches.push({
                 id: doc.id,
                 userId: matchedUserId,
@@ -35,7 +31,6 @@ export const fetchMatches = async (userId: string, userType: string) => {
             });
         });
 
-        // Fetch additional data from the opposite collection
         const matchDataPromises = matches.map(async (match) => {
             try {
                 const userDoc = await getDoc(doc(db, oppositeType, match.userId));
@@ -65,7 +60,6 @@ export const fetchMatches = async (userId: string, userType: string) => {
     }
 };
 
-// Function to fetch messages for a specific chat
 export const fetchMessages = async (chatId: string) => {
     const messages: any[] = [];
     try {
@@ -86,7 +80,6 @@ export const fetchMessages = async (chatId: string) => {
     }
 };
 
-// Function to send a new message in a chat
 export const sendMessage = async (chatId: string, senderId: string, text: string) => {
     try {
         const messageData = {
@@ -95,10 +88,8 @@ export const sendMessage = async (chatId: string, senderId: string, text: string
             timestamp: serverTimestamp(),
         };
 
-        // Add a document to the `messages` sub-collection of the chat
         await addDoc(collection(db, "chats", chatId, "messages"), messageData);
 
-        // Optionally, update the last message in the chat document
         const chatDoc = doc(db, "chats", chatId);
         await updateDoc(chatDoc, {
             lastMessage: text,
@@ -111,21 +102,12 @@ export const sendMessage = async (chatId: string, senderId: string, text: string
     }
 };
 
-// Function to create a new chat document
 export const createChat = async (user1Email: string, user2Email: string) => {
     try {
-        // Create a chat with a Firestore-generated ID
         const chatRef = await addDoc(collection(db, "chats"), {
             userIds: [user1Email, user2Email],
             createdAt: serverTimestamp(),
             lastMessage: "No messages yet",
-            timestamp: serverTimestamp(),
-        });
-
-        // Add an initial message to create the `messages` sub-collection
-        await addDoc(collection(db, "chats", chatRef.id, "messages"), {
-            text: "Welcome to the chat!",
-            senderId: "system", // Indicate this is a system message
             timestamp: serverTimestamp(),
         });
 
@@ -135,7 +117,6 @@ export const createChat = async (user1Email: string, user2Email: string) => {
     }
 };
 
-// Function to fetch user data
 export const fetchUserData = async (userEmailOrCompanyMail: string, userType: string) => {
     try {
         const collectionName = userType === "employee" ? "employee" : "employer";
@@ -158,13 +139,11 @@ export const fetchUserData = async (userEmailOrCompanyMail: string, userType: st
     }
 };
 
-// Function to fetch chats for the current user
 export const fetchChats = async (userEmailOrCompanyMail: string, userType: string) => {
     const chats: any[] = [];
     const oppositeType = userType === "employee" ? "employer" : "employee";
 
     try {
-        // Fetch chats where the user is one of the participants
         const chatsQuery = query(collection(db, "chats"), where("userIds", "array-contains", userEmailOrCompanyMail));
         const querySnapshot = await getDocs(chatsQuery);
 
@@ -173,7 +152,6 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
             return chats;
         }
 
-        // Process each chat
         for (const doc of querySnapshot.docs) {
             const data = doc.data();
             const matchedUserEmailOrCompanyMail = data.userIds.find(
@@ -181,7 +159,6 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
             );
 
             if (matchedUserEmailOrCompanyMail) {
-                // Fetch user data for the matched user
                 const userData = await fetchUserData(matchedUserEmailOrCompanyMail, oppositeType);
 
                 chats.push({
@@ -201,7 +178,6 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
     }
 };
 
-// Fetch the current user ID from local storage
 export const getCurrentUserId = (): string | null => {
     try {
         const userId = localStorage.getItem("userId");
