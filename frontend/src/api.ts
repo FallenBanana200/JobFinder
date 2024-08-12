@@ -52,7 +52,8 @@ export const fetchMatches = async (userId: string, userType: string) => {
 export const fetchMessages = async (chatId: string) => {
     const messages: any[] = [];
     try {
-        const q = query(collection(db, "chats", chatId, "messages"), orderBy("timestamp"));
+        const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
+
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             messages.push({
@@ -60,29 +61,34 @@ export const fetchMessages = async (chatId: string) => {
                 ...doc.data(),
             });
         });
+
+        return messages;
     } catch (error) {
         console.error("Error fetching messages:", error);
+        return [];
     }
-    return messages;
 };
 
 // Send a new message in a chat
 export const sendMessage = async (chatId: string, senderId: string, text: string) => {
-    const messageData = {
-        text,
-        senderId,
-        timestamp: serverTimestamp(),
-    };
-
     try {
-        await addDoc(collection(db, "chats", chatId, "messages"), messageData);
+        const messageData = {
+            text,
+            senderId,
+            timestamp: serverTimestamp(),
+        };
+
+        // Add a document to the `messages` sub-collection of the chat
+        await addDoc(collection(db, 'chats', chatId, 'messages'), messageData);
 
         // Optionally, update the last message in the chat document
-        const chatDoc = doc(db, "chats", chatId);
+        const chatDoc = doc(db, 'chats', chatId);
         await updateDoc(chatDoc, {
             lastMessage: text,
             timestamp: serverTimestamp(),
         });
+
+        console.log("Message sent successfully");
     } catch (error) {
         console.error("Error sending message:", error);
     }
