@@ -5,19 +5,22 @@ import { Link } from "react-router-dom";
 
 interface ChatProps {
     chatId: string;
-    name: string;
+    name?: string;
+    companyName?: string;
     message: string;
     timestamp: string;
     profilePic: string;
 }
 
-function Chat({ chatId, name, message, timestamp, profilePic }: ChatProps) {
+function Chat({ chatId, name, companyName, message, timestamp, profilePic }: ChatProps) {
+    const displayName = companyName || name || "Unknown";
+
     return (
         <Link to={`/chat/${chatId}`}>
             <div className="chat">
                 <Avatar className="chat__image" src={profilePic} />
                 <div className="chat__details">
-                    <h2>{name}</h2>
+                    <h2>{displayName}</h2>
                     <p>{message}</p>
                 </div>
                 <p className="chat__timestamp">{timestamp}</p>

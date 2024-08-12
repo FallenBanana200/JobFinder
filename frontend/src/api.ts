@@ -117,34 +117,15 @@ export const createChat = async (user1Email: string, user2Email: string) => {
     }
 };
 
-export const fetchUserData = async (userEmailOrCompanyMail: string, userType: string) => {
-    try {
-        const collectionName = userType === "employee" ? "employee" : "employer";
-        const fieldName = userType === "employee" ? "email" : "companyMail";
-
-        console.log(`Fetching user data from collection: ${collectionName}, where ${fieldName} == ${userEmailOrCompanyMail}`);
-
-        const q = query(collection(db, collectionName), where(fieldName, "==", userEmailOrCompanyMail));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-            return querySnapshot.docs[0].data();
-        } else {
-            console.error(`User document not found. Collection: ${collectionName}, ${fieldName}: ${userEmailOrCompanyMail}`);
-            return null;
-        }
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        return null;
-    }
-};
-
 export const fetchChats = async (userEmailOrCompanyMail: string, userType: string) => {
     const chats: any[] = [];
     const oppositeType = userType === "employee" ? "employer" : "employee";
 
     try {
-        const chatsQuery = query(collection(db, "chats"), where("userIds", "array-contains", userEmailOrCompanyMail));
+        const chatsQuery = query(
+            collection(db, "chats"),
+            where("userIds", "array-contains", userEmailOrCompanyMail)
+        );
         const querySnapshot = await getDocs(chatsQuery);
 
         if (querySnapshot.empty) {
@@ -159,15 +140,21 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
             );
 
             if (matchedUserEmailOrCompanyMail) {
-                const userData = await fetchUserData(matchedUserEmailOrCompanyMail, oppositeType);
+                let userData = null;
+                if (userType === "employee") {
+                    userData = await fetchUserData(matchedUserEmailOrCompanyMail, "employer");
+                } else if (userType === "employer") {
+                    userData = await fetchUserData(matchedUserEmailOrCompanyMail, "employee");
+                }
 
                 chats.push({
                     id: doc.id,
                     name: userData ? (userType === "employee" ? userData.companyName : userData.name) : "Unknown",
-                    profilePic: userData ? userData.picture : "",
+                    picture: userData ? userData.picture : "",
                     lastMessage: data.lastMessage || "No messages yet",
                     timestamp: data.timestamp?.toDate().toLocaleString() || new Date().toLocaleString(),
                 });
+
             }
         }
 
@@ -175,6 +162,27 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
     } catch (error) {
         console.error("Error fetching chats:", error);
         return [];
+    }
+};
+
+export const fetchUserData = async (emailOrCompanyMail: string, type: string) => {
+    try {
+        const collectionName = type === "employee" ? "employee" : "employer";
+        const userQuery = query(
+            collection(db, collectionName),
+            where(type === "employee" ? "email" : "companyMail", "==", emailOrCompanyMail)
+        );
+        const querySnapshot = await getDocs(userQuery);
+
+        if (!querySnapshot.empty) {
+            return querySnapshot.docs[0].data();
+        } else {
+            console.error(`No ${type} document found for ${emailOrCompanyMail}`);
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null;
     }
 };
 
