@@ -1,41 +1,45 @@
-import React, { useState, useEffect } from "react";
-import Chat from "./Chat";
-import { fetchChats } from "../api";
-import { useAuth } from "../AuthContext";
+import React, { useEffect, useState } from "react";
+import { fetchChats } from "../api"; // Import your fetchChats function
 
-function Chats() {
+// Assuming Chat is a separate component you've defined elsewhere
+import Chat from "./Chat"; // Adjust the import path as needed
+
+const Chats = () => {
     const [chats, setChats] = useState<any[]>([]);
-    const { currentUser } = useAuth();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Define an async function to fetch chats
-        const fetchUserChats = async () => {
-            if (!currentUser) {
-                console.error("No current user found.");
-                return;
-            }
+        // Retrieve the current user ID from local storage directly
+        const userId = localStorage.getItem("userId");
+        const userType = "employee"; // Set this according to your logic or user state
 
-            const userEmailOrCompanyMail = currentUser.email || "";
-            const userType = currentUser.type || "";
+        console.log("Retrieved user ID:", userId); // Debug log to ensure user ID retrieval
 
-            if (!userEmailOrCompanyMail || !userType) {
-                console.error("User email or type not available.");
-                return;
-            }
+        if (!userId) {
+            console.error("No current user found.");
+            return;
+        }
 
+        // Fetch chats for the current user
+        const loadChats = async () => {
             try {
-                console.log("Fetching chats for:", userEmailOrCompanyMail, userType);
-                const fetchedChats = await fetchChats(userEmailOrCompanyMail, userType);
-                console.log("Fetched chats:", fetchedChats);
-                setChats(fetchedChats);
+                setLoading(true);
+                const userChats = await fetchChats(userId, userType);
+                console.log("Fetched chats:", userChats); // Debug log for fetched chats
+                setChats(userChats);
             } catch (error) {
-                console.error("Error fetching chats:", error);
+                console.error("Error loading chats:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        // Call the function to fetch chats
-        fetchUserChats();
-    }, [currentUser]); // Fetch chats every time the component mounts or `currentUser` changes
+        loadChats();
+    }, []);
+
+    if (loading) {
+        return <div>Loading chats...</div>;
+    }
 
     return (
         <div className="chats">
@@ -55,6 +59,6 @@ function Chats() {
             )}
         </div>
     );
-}
+};
 
 export default Chats;

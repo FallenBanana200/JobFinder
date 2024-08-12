@@ -1,7 +1,20 @@
-import { collection, query, where, getDocs, getDoc, doc, addDoc, updateDoc, serverTimestamp, orderBy } from "firebase/firestore";
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    updateDoc,
+    serverTimestamp,
+    orderBy,
+    DocumentData,
+    QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
-// Fetch matches for the current user
+// Function to fetch matches for the current user
 export const fetchMatches = async (userId: string, userType: string) => {
     const matches: any[] = [];
     const oppositeType = userType === "employee" ? "employers" : "employees";
@@ -28,7 +41,11 @@ export const fetchMatches = async (userId: string, userType: string) => {
                 const userDoc = await getDoc(doc(db, oppositeType, match.userId));
                 return {
                     ...match,
-                    name: userDoc.exists() ? (userType === "employee" ? userDoc.data()?.companyName : userDoc.data()?.name) : "Unknown",
+                    name: userDoc.exists()
+                        ? userType === "employee"
+                            ? userDoc.data()?.companyName
+                            : userDoc.data()?.name
+                        : "Unknown",
                     profilePic: userDoc.exists() ? userDoc.data()?.picture : "",
                 };
             } catch (error) {
@@ -48,11 +65,11 @@ export const fetchMatches = async (userId: string, userType: string) => {
     }
 };
 
-// Fetch messages for a specific chat
+// Function to fetch messages for a specific chat
 export const fetchMessages = async (chatId: string) => {
     const messages: any[] = [];
     try {
-        const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp'));
+        const q = query(collection(db, "chats", chatId, "messages"), orderBy("timestamp"));
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -69,7 +86,7 @@ export const fetchMessages = async (chatId: string) => {
     }
 };
 
-// Send a new message in a chat
+// Function to send a new message in a chat
 export const sendMessage = async (chatId: string, senderId: string, text: string) => {
     try {
         const messageData = {
@@ -79,10 +96,10 @@ export const sendMessage = async (chatId: string, senderId: string, text: string
         };
 
         // Add a document to the `messages` sub-collection of the chat
-        await addDoc(collection(db, 'chats', chatId, 'messages'), messageData);
+        await addDoc(collection(db, "chats", chatId, "messages"), messageData);
 
         // Optionally, update the last message in the chat document
-        const chatDoc = doc(db, 'chats', chatId);
+        const chatDoc = doc(db, "chats", chatId);
         await updateDoc(chatDoc, {
             lastMessage: text,
             timestamp: serverTimestamp(),
@@ -94,7 +111,7 @@ export const sendMessage = async (chatId: string, senderId: string, text: string
     }
 };
 
-// Create a new chat document
+// Function to create a new chat document
 export const createChat = async (user1Email: string, user2Email: string) => {
     try {
         // Create a chat with a Firestore-generated ID
@@ -105,12 +122,20 @@ export const createChat = async (user1Email: string, user2Email: string) => {
             timestamp: serverTimestamp(),
         });
 
+        // Add an initial message to create the `messages` sub-collection
+        await addDoc(collection(db, "chats", chatRef.id, "messages"), {
+            text: "Welcome to the chat!",
+            senderId: "system", // Indicate this is a system message
+            timestamp: serverTimestamp(),
+        });
+
         console.log("Chat created successfully with ID:", chatRef.id);
     } catch (error) {
         console.error("Error creating chat:", error);
     }
 };
 
+// Function to fetch user data
 export const fetchUserData = async (userEmailOrCompanyMail: string, userType: string) => {
     try {
         const collectionName = userType === "employee" ? "employee" : "employer";
@@ -133,12 +158,13 @@ export const fetchUserData = async (userEmailOrCompanyMail: string, userType: st
     }
 };
 
-// Fetch chats for the current user
+// Function to fetch chats for the current user
 export const fetchChats = async (userEmailOrCompanyMail: string, userType: string) => {
     const chats: any[] = [];
     const oppositeType = userType === "employee" ? "employer" : "employee";
 
     try {
+        // Fetch chats where the user is one of the participants
         const chatsQuery = query(collection(db, "chats"), where("userIds", "array-contains", userEmailOrCompanyMail));
         const querySnapshot = await getDocs(chatsQuery);
 
@@ -147,12 +173,17 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
             return chats;
         }
 
+        // Process each chat
         for (const doc of querySnapshot.docs) {
             const data = doc.data();
-            const matchedUserEmailOrCompanyMail = data.userIds.find((emailOrCompanyMail: string) => emailOrCompanyMail !== userEmailOrCompanyMail);
+            const matchedUserEmailOrCompanyMail = data.userIds.find(
+                (emailOrCompanyMail: string) => emailOrCompanyMail !== userEmailOrCompanyMail
+            );
 
             if (matchedUserEmailOrCompanyMail) {
+                // Fetch user data for the matched user
                 const userData = await fetchUserData(matchedUserEmailOrCompanyMail, oppositeType);
+
                 chats.push({
                     id: doc.id,
                     name: userData ? (userType === "employee" ? userData.companyName : userData.name) : "Unknown",
@@ -167,5 +198,16 @@ export const fetchChats = async (userEmailOrCompanyMail: string, userType: strin
     } catch (error) {
         console.error("Error fetching chats:", error);
         return [];
+    }
+};
+
+// Fetch the current user ID from local storage
+export const getCurrentUserId = (): string | null => {
+    try {
+        const userId = localStorage.getItem("userId");
+        return userId;
+    } catch (error) {
+        console.error("Error retrieving user ID from local storage:", error);
+        return null;
     }
 };

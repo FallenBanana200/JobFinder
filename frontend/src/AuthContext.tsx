@@ -1,57 +1,36 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { db } from '../src/firebase'; // Make sure this imports the Firestore db
-import { doc, getDoc } from 'firebase/firestore';
+import React, { createContext, useContext, useState } from 'react';
 
-interface User {
-    uid: string;
-    type: 'employee' | 'employer';
-    matches?: string[]; // Matches can be emails or companyMails
-    email?: string;
-    companyMail?: string;
-    name?: string;
-    picture?: string;
+interface AuthContextType {
+    isAuthenticated: boolean;
+    login: (email: string, password: string) => Promise<void>;
+    register: (userType: 'employee' | 'employer', data: any) => Promise<void>;
 }
 
-interface AuthContextProps {
-    currentUser: User | null;
-}
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-export const AuthProvider: React.FC = ({ children }:any) => {
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const login = async (email: string, password: string) => {
+        // Tukaj dodaj svojo logiko prijave
+        // Če je prijava uspešna:
+        setIsAuthenticated(true);
+    };
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const userId = localStorage.getItem('userId');
-            const userType = localStorage.getItem('userType');
-
-            if (userId && userType) {
-                const collectionName = userType === 'employee' ? 'employee' : 'employer';
-                const userRef = doc(db, collectionName, userId);
-                const userDoc = await getDoc(userRef);
-
-                if (userDoc.exists()) {
-                    setCurrentUser({ ...userDoc.data(), uid: userId, type: userType } as User);
-                } else {
-                    console.error(`User document not found. Collection: ${collectionName}, UserID: ${userId}`);
-                }
-            } else {
-                console.error('User ID or type is not available in localStorage.');
-            }
-        };
-
-        fetchUserData();
-    }, []);
+    const register = async (userType: 'employee' | 'employer', data: any) => {
+        // Tukaj dodaj svojo logiko registracije
+        // Po uspešni registraciji:
+        setIsAuthenticated(true);
+    };
 
     return (
-        <AuthContext.Provider value={{ currentUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, register }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');
