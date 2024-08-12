@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  jobfinder:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_APPLICATION_NAME=JobFinder
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/serviceAccountKey.json
+    volumes:
+      - ./src/main/resources/serviceAccountKey.json:/app/serviceAccountKey.json

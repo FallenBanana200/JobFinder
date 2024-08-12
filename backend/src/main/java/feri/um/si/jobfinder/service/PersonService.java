@@ -6,11 +6,13 @@ import feri.um.si.jobfinder.models.employee.Employee;
 import feri.um.si.jobfinder.models.employer.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@CrossOrigin(origins = "https://job-finder-djxnaodtb-fallenbananas-projects.vercel.app")
 public class PersonService {
 
     @Autowired
