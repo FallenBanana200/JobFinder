@@ -12,6 +12,7 @@ import './index.css';
 import { AuthProvider } from './AuthContext.tsx';
 import Footer from './components/Footer.tsx';
 import WorkTypes from './components/WorkTypes.tsx';
+import Map from './components/Map.tsx';
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -77,6 +78,15 @@ function MainRouter() {
         <>
           <Header backButton="/app" />
           <WorkTypes/>
+        </>
+      ),
+    },
+    {
+      path: '/map',
+      element: (
+        <>
+          <Header backButton="/app" />
+          <Map/>
         </>
       ),
     },

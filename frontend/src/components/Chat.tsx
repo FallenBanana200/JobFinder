@@ -14,7 +14,6 @@ interface ChatProps {
 }
 
 function Chat({ chatId, name, companyName, message, timestamp, profilePic }: ChatProps) {
-    // Initialize rating value
     const [value, setValue] = useState<number | null>(0);
     const displayName = companyName || name || "Unknown";
 

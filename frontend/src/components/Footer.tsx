@@ -66,9 +66,11 @@ function Footer() {
                     </Select>
                 </FormControl>
             </Box>
-            <IconButton className='footer-item'>
-                <MapIcon fontSize='large' />
-            </IconButton>
+            <Link to={"/map"} >
+                <IconButton className='footer-item'>
+                    <MapIcon fontSize='large' />
+                </IconButton>
+            </Link>
         </div>
     );
 }
