@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
-@CrossOrigin(origins = "https://job-finder-djxnaodtb-fallenbananas-projects.vercel.app")
+@CrossOrigin
 public class PersonService {
 
     @Autowired

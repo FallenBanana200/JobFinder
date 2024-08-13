@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@CrossOrigin(origins = "https://job-finder-djxnaodtb-fallenbananas-projects.vercel.app")
+@CrossOrigin
 @RequestMapping("/api/employee")
 public class EmployeeController {
 

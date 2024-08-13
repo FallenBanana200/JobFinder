@@ -75,8 +75,7 @@ function LoginSignUpForm(){
                 let userFound = false;
                 let userId = '';
 
-                let response = await fetch(`https://jobfinder-latest.onrender.com/api/employee/${loginData.email}`);
-
+                let response = await fetch(`https://jobfinder-latest.onrender.com/api/employee/${loginData.email}`, {mode: 'cors'});
                 if (response.ok) {
                     let data = await response.json();
                     if (data && data.password === loginData.password) {
@@ -87,7 +86,7 @@ function LoginSignUpForm(){
                 }
 
                 if (!userFound) {
-                    response = await fetch(`https://jobfinder-latest.onrender.com/api/employer/${loginData.email}`);
+                    response = await fetch(`https://jobfinder-latest.onrender.com/api/employer/${loginData.email}`, {mode: 'cors'});
 
                     if (response.ok) {
                         let data = await response.json();
