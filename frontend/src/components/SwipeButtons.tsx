@@ -15,19 +15,19 @@ interface SwipeButtonsProps {
 function SwipeButtons({ onSwipeLeft, onSwipeRight }: SwipeButtonsProps) {
     return (
         <div className="swipeButtons">
-            <IconButton className="swipeButtons__repeat">
+            <IconButton className="swipeButtons__repeat" onClick={onSwipeLeft} >
                 <ReplayIcon fontSize="large" />
             </IconButton>
             <IconButton className="swipeButtons__left" onClick={onSwipeLeft}>
                 <CloseIcon fontSize="large" />
             </IconButton>
-            <IconButton className="swipeButtons__star">
+            <IconButton className="swipeButtons__star" onClick={onSwipeRight} >
                 <StarRateIcon fontSize="large" />
             </IconButton>
             <IconButton className="swipeButtons__right" onClick={onSwipeRight}>
                 <ThumbUpIcon fontSize="large" />
             </IconButton>
-            <IconButton className="swipeButtons__lightning">
+            <IconButton className="swipeButtons__lightning" onClick={onSwipeLeft} >
                 <WatchLaterIcon fontSize="large" />
             </IconButton>
         </div>
