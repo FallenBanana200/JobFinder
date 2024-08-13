@@ -54,13 +54,22 @@ JobFinder je spletna aplikacija, ki uporabnikom (delodajalcem in delojemalcem) p
 
 ## Tehnološki sklad 🛠️
 
-- React <br/>
-- SpringBoot <br>
-- Firestore <br>
-- Render <br>
-- Vercel <br>
-- Docker <br>
-<img src="https://github.com/user-attachments/assets/arhitektura.png" width="100" />
+<table style="border-collapse: collapse; width: 100%; border: none;">
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px; border: none;">
+      React <br/>
+      SpringBoot <br/>
+      Firestore <br/>
+      Render <br/>
+      Vercel <br/>
+      Docker <br/>
+    </td>
+    <td style="vertical-align: top; border: none;">
+      <img src="logo-assets/arhitektura.png" width="800" style="display: block;"/>
+    </td>
+  </tr>
+</table>
+
 
 ## Namestitev ⚙️
 
