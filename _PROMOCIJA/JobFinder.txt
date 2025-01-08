@@ -1,0 +1,20 @@
+JobFinder
+
+Interaktiven način za iskanje oziroma ponujanje zaposlitve za tako delodajalce kot delojemalce. 
+
+Leto izdelave: 2024
+
+Nik Tišler
+
+Domača stran: https://job-finder-brown-pi.vercel.app/
+Vir podatkov: https://console.firebase.google.com/u/0/project/jobfinder-e2908/overview
+Koda: https://github.com/FallenBanana200/JobFinder
+
+Kategorizacija: Spletna aplikacija
+
+Oznake: ReactTS, FireStore, Springboot, Scrum, GitHub, Docker, REST, Render, Vercel, Firebase
+
+Opis projekta: 
+JobFinder je inovativna spletna aplikacija, ki povezuje delodajalce in delojemalce na interaktiven način. Uporabniki lahko ustvarijo profil z osnovnimi informacijami, kompetencami, življenjepisom in drugimi podatki, ki jim pomagajo pri iskanju zaposlitve ali novih kadrov. Aplikacija omogoča delodajalcem, da objavljajo ponudbe za delo z navedbo naziva, kontaktnih informacij, plače in potrebnih kompetenc. Če delodajalec in delojemalec izrazita medsebojno zanimanje (t.i. "like"), se odpre možnost klepeta za nadaljnjo komunikacijo.
+
+Načrtovane so dodatne funkcionalnosti, kot so napredno filtriranje glede na tip službe in regijo, prikaz bližnjih priložnosti, ocenjevanje uporabnikov ter povezovanje z LinkedIn in GitHub profili. Aplikacija bo omogočala plačljivo različico, ki bo vključevala posebne ugodnosti, kot so vračanje na prejšnje izbire, posebni like in obveščanje o ujemanju preko e-pošte. Prav tako bo na voljo integracija z Google Meet za enostavno načrtovanje razgovorov.
