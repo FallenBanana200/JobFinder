@@ -16,6 +16,8 @@
 
 JobFinder je spletna aplikacija, ki uporabnikom (delodajalcem in delojemalcem) ponuja interaktiven in zanimiv način za iskanje oziroma ponujanje službe. Preprosto ustvarite svoj račun, nanj dodajte svoje osnovne informacije, kompetence, CV in drugo, kar vam bo pomagalo pri pridobivanju zaposlitve ali kaj služba ponuja, če kot delodajalec iščete nov delovni kader!
 
+**V repozitoriju se nahaja mapica z imenom _PROMOCIJA v kateri najdete posnetke zaslona, video demonstracijo uporabe aplikacije in drugo.**
+
 ## Funkcionalnosti 🚀
 
 - **Profil delojemalca**:
